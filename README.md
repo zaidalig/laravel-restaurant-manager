@@ -50,6 +50,7 @@ Run:
 ```bash
 php artisan migrate --seed
 php artisan serve
+php artisan test
 ```
 
 ## Demo Login
