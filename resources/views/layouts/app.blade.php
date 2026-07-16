@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Dashboard') - Restaurant Manager</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset_cdn('fontawesome', 'vendor/fontawesome/css/all.min.css') }}">
+    <link href="{{ asset_cdn('bootstrap_css', 'vendor/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('styles')
 </head>
@@ -41,7 +41,7 @@
     </main>
 </div>
 <div class="modal fade" id="deleteModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Confirm Delete</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body">Delete <strong id="deleteItemName"></strong>?</div><div class="modal-footer"><button class="btn btn-light" data-bs-dismiss="modal">Cancel</button><form id="deleteForm" method="POST">@csrf @method('DELETE')<button class="btn btn-danger">Delete</button></form></div></div></div></div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset_cdn('bootstrap_js', 'vendor/bootstrap/bootstrap.bundle.min.js') }}"></script>
 <script>
 document.getElementById('sidebarToggle')?.addEventListener('click',()=>document.getElementById('sidebar').classList.toggle('active'));
 const deleteModal=document.getElementById('deleteModal');deleteModal?.addEventListener('show.bs.modal',e=>{const b=e.relatedTarget;document.getElementById('deleteItemName').textContent=b.getAttribute('data-name');document.getElementById('deleteForm').action=b.getAttribute('data-url');});
