@@ -11,9 +11,19 @@ use Illuminate\Support\Facades\DB;
 
 class RestaurantOrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $orders = RestaurantOrder::with(['table', 'waiter'])->latest()->paginate(10);
+        $query = RestaurantOrder::with(['table', 'waiter']);
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
+        if ($request->filled('search')) {
+            $query->where('order_number', 'like', '%'.$request->input('search').'%');
+        }
+
+        $orders = $query->latest()->paginate(10)->withQueryString();
 
         return view('orders.index', compact('orders'));
     }
