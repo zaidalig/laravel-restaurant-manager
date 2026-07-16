@@ -1,0 +1,5 @@
+@extends('layouts.app')@section('title','Tables')@section('page_title','Dining Tables')
+@section('content')<div class="d-flex justify-content-between mb-3"><a href="{{ route('tables.create') }}" class="btn btn-primary">Add Table</a></div>
+<div class="row g-3">@foreach($tables as $table)<div class="col-md-4 col-lg-3"><div class="card border-0 shadow-sm p-3"><h5 class="fw-bold mb-1">{{ $table->name }}</h5><p class="mb-1 text-muted">Seats: {{ $table->capacity }} | {{ $table->zone ?? 'Main' }}</p><span class="badge bg-light text-dark border">{{ ucfirst($table->status) }}</span><div class="mt-3 d-flex gap-2"><a href="{{ route('tables.edit',$table) }}" class="btn btn-sm btn-outline-primary">Edit</a><button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-url="{{ route('tables.destroy',$table) }}" data-name="{{ $table->name }}">Delete</button></div></div></div>@endforeach</div>
+@if($tables->hasPages())<div class="mt-3">{{ $tables->links() }}</div>@endif
+@endsection

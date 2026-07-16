@@ -1,0 +1,5 @@
+<div class="mb-3"><label class="form-label">Name</label><input name="name" class="form-control" value="{{ old('name', $user->name ?? '') }}" required></div>
+<div class="mb-3"><label class="form-label">Email</label><input type="email" name="email" class="form-control" value="{{ old('email', $user->email ?? '') }}" required></div>
+<div class="mb-3"><label class="form-label">Password</label><input type="password" name="password" class="form-control" @empty($user) required @endempty></div>
+<div class="mb-3"><label class="form-label">Role</label><select name="role" class="form-select">@foreach(['owner','manager','waiter','host','viewer'] as $role)<option value="{{ $role }}" @selected(old('role', $user->role ?? '')===$role)>{{ ucfirst($role) }}</option>@endforeach</select></div>
+<div class="mb-3"><label class="form-label">Status</label><select name="status" class="form-select">@foreach(['active','inactive','blocked'] as $status)<option value="{{ $status }}" @selected(old('status', $user->status ?? 'active')===$status)>{{ ucfirst($status) }}</option>@endforeach</select></div>

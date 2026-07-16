@@ -1,0 +1,3 @@
+@extends('layouts.app')@section('title','Add Category')@section('page_title','Add Menu Category')
+@section('content')<div class="card p-4 border-0 shadow-sm"><form method="POST" action="{{ route('menu-categories.store') }}">@csrf
+<input name="name" class="form-control mb-3" placeholder="Name" required><textarea name="description" class="form-control mb-3" placeholder="Description"></textarea><select name="status" class="form-select mb-3"><option value="active">Active</option><option value="inactive">Inactive</option></select><button class="btn btn-primary">Save</button></form></div>@endsection

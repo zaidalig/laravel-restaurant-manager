@@ -1,0 +1,3 @@
+@extends('layouts.app')@section('title','Edit Category')@section('page_title','Edit Menu Category')
+@section('content')<div class="card p-4 border-0 shadow-sm"><form method="POST" action="{{ route('menu-categories.update',$category) }}">@csrf @method('PUT')
+<input name="name" class="form-control mb-3" value="{{ $category->name }}" required><textarea name="description" class="form-control mb-3">{{ $category->description }}</textarea><select name="status" class="form-select mb-3"><option value="active" @selected($category->status==='active')>Active</option><option value="inactive" @selected($category->status==='inactive')>Inactive</option></select><button class="btn btn-primary">Update</button></form></div>@endsection
