@@ -110,4 +110,31 @@ class RestaurantOrderController extends Controller
 
         return back()->with('success', 'Order status updated.');
     }
+
+    public function closeBill(Request $request, RestaurantOrder $order)
+    {
+        if ($order->status === 'paid') {
+            return back()->with('error', 'This bill is already closed.');
+        }
+
+        if ($order->status === 'cancelled') {
+            return back()->with('error', 'Cannot close a cancelled order.');
+        }
+
+        $data = $request->validate([
+            'payment_method' => 'required|in:cash,card',
+        ]);
+
+        $order->update([
+            'status' => 'paid',
+            'payment_method' => $data['payment_method'],
+            'paid_at' => now(),
+        ]);
+
+        if ($order->dining_table_id) {
+            DiningTable::where('id', $order->dining_table_id)->update(['status' => 'available']);
+        }
+
+        return back()->with('success', 'Bill closed — payment recorded.');
+    }
 }

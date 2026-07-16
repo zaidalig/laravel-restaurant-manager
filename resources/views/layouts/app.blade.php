@@ -23,7 +23,9 @@
         <li class="nav-item"><a href="{{ route('shifts.index') }}" class="nav-link {{ request()->routeIs('shifts.*')?'active':'' }}"><i class="fa-solid fa-user-clock"></i><span>Staff Shifts</span></a></li>
         @endcan
         @can('manage-users')<li class="nav-item"><a href="{{ route('users.index') }}" class="nav-link {{ request()->routeIs('users.*')?'active':'' }}"><i class="fa-solid fa-user-gear"></i><span>Users</span></a></li>@endcan
-        <li class="nav-item"><a href="{{ route('activity.index') }}" class="nav-link {{ request()->routeIs('activity.*')?'active':'' }}"><i class="fa-solid fa-clock-rotate-left"></i><span>Activity</span></a></li>
+        @can('manage-users')
+                <li class="nav-item"><a href="{{ route('activity.index') }}" class="nav-link {{ request()->routeIs('activity.*')?'active':'' }}"><i class="fa-solid fa-clock-rotate-left"></i><span>Activity</span></a></li>
+            @endcan
     </ul>
 </aside>
 <div class="main-wrapper">

@@ -13,7 +13,7 @@ class RestaurantOrder extends Model
 
     protected $fillable = [
         'order_number', 'dining_table_id', 'reservation_id', 'status',
-        'subtotal', 'tax', 'total', 'user_id',
+        'subtotal', 'tax', 'total', 'payment_method', 'paid_at', 'user_id',
     ];
 
     protected function casts(): array
@@ -22,6 +22,7 @@ class RestaurantOrder extends Model
             'subtotal' => 'decimal:2',
             'tax' => 'decimal:2',
             'total' => 'decimal:2',
+            'paid_at' => 'datetime',
         ];
     }
 
