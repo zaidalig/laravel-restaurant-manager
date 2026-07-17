@@ -12,6 +12,8 @@ use App\Http\Controllers\StaffShiftController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+Route::view('/', 'public.home')->name('home');
+
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'create'])->name('login');
     Route::post('/login', [LoginController::class, 'store'])->name('login.store');
@@ -19,7 +21,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware(['auth', 'active.user'])->group(function () {
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::middleware('can:manage-restaurant')->group(function () {
         Route::resource('tables', DiningTableController::class)->except(['show']);
@@ -35,11 +37,12 @@ Route::middleware(['auth', 'active.user'])->group(function () {
     Route::middleware('can:manage-orders')->group(function () {
         Route::resource('orders', RestaurantOrderController::class)->only(['index', 'create', 'store', 'show']);
         Route::patch('orders/{order}/status', [RestaurantOrderController::class, 'updateStatus'])->name('orders.status');
+        Route::patch('orders/{order}/pay', [RestaurantOrderController::class, 'closeBill'])->name('orders.pay');
     });
 
     Route::middleware('can:manage-users')->group(function () {
         Route::resource('users', UserController::class)->except(['show']);
     });
 
-    Route::get('activity-logs', [ActivityLogController::class, 'index'])->name('activity.index');
+    Route::get('activity-logs', [ActivityLogController::class, 'index'])->middleware('can:manage-users')->name('activity.index');
 });

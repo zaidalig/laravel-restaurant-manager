@@ -13,7 +13,8 @@ class DiningTableController extends Controller
         if ($request->filled('status')) {
             $query->where('status', $request->input('status'));
         }
-        $tables = $query->orderBy('name')->paginate(12)->withQueryString();
+        [$sort, $direction] = $this->tableSort($request, ['created_at', 'name', 'capacity', 'status'], 'created_at');
+        $tables = $query->orderBy($sort, $direction)->paginate($this->tablePerPage($request))->withQueryString();
 
         return view('tables.index', compact('tables'));
     }

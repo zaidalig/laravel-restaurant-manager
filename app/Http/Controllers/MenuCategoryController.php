@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 
 class MenuCategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = MenuCategory::withCount('items')->latest()->paginate(10);
+        [$sort, $direction] = $this->tableSort($request, ['created_at', 'name', 'status']);
+        $categories = MenuCategory::withCount('items')->orderBy($sort, $direction)->paginate($this->tablePerPage($request))->withQueryString();
 
         return view('menu-categories.index', compact('categories'));
     }

@@ -14,7 +14,8 @@ class MenuItemController extends Controller
         if ($request->filled('category_id')) {
             $query->where('menu_category_id', $request->input('category_id'));
         }
-        $items = $query->latest()->paginate(10)->withQueryString();
+        [$sort, $direction] = $this->tableSort($request, ['created_at', 'name', 'price', 'status']);
+        $items = $query->orderBy($sort, $direction)->paginate($this->tablePerPage($request))->withQueryString();
         $categories = MenuCategory::orderBy('name')->get();
 
         return view('menu-items.index', compact('items', 'categories'));
