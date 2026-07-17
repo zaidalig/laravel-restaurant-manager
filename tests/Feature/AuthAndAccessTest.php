@@ -12,7 +12,7 @@ class AuthAndAccessTest extends TestCase
 
     public function test_guests_are_redirected_to_login(): void
     {
-        $this->get('/')->assertRedirect('/login');
+        $this->get('/dashboard')->assertRedirect('/login');
     }
 
     public function test_owner_can_view_dashboard(): void
@@ -25,7 +25,7 @@ class AuthAndAccessTest extends TestCase
             'status' => 'active',
         ]);
 
-        $this->actingAs($user)->get('/')->assertOk();
+        $this->actingAs($user)->get('/dashboard')->assertOk();
     }
 
     public function test_owner_can_manage_restaurant_modules(): void

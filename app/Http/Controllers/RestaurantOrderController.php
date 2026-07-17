@@ -23,7 +23,8 @@ class RestaurantOrderController extends Controller
             $query->where('order_number', 'like', '%'.$request->input('search').'%');
         }
 
-        $orders = $query->latest()->paginate(10)->withQueryString();
+        [$sort, $direction] = $this->tableSort($request, ['created_at', 'order_number', 'status', 'total']);
+        $orders = $query->orderBy($sort, $direction)->paginate($this->tablePerPage($request))->withQueryString();
 
         return view('orders.index', compact('orders'));
     }

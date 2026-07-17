@@ -17,7 +17,8 @@ class ReservationController extends Controller
         if ($request->filled('date')) {
             $query->whereDate('reservation_date', $request->input('date'));
         }
-        $reservations = $query->latest('reservation_date')->paginate(10)->withQueryString();
+        [$sort, $direction] = $this->tableSort($request, ['created_at', 'reservation_date', 'customer_name', 'status'], 'reservation_date');
+        $reservations = $query->orderBy($sort, $direction)->paginate($this->tablePerPage($request))->withQueryString();
 
         return view('reservations.index', compact('reservations'));
     }

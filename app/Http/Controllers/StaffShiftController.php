@@ -14,7 +14,8 @@ class StaffShiftController extends Controller
         if ($request->filled('date')) {
             $query->whereDate('shift_date', $request->input('date'));
         }
-        $shifts = $query->latest('shift_date')->paginate(10)->withQueryString();
+        [$sort, $direction] = $this->tableSort($request, ['created_at', 'shift_date', 'status'], 'created_at');
+        $shifts = $query->orderBy($sort, $direction)->paginate($this->tablePerPage($request))->withQueryString();
 
         return view('shifts.index', compact('shifts'));
     }
